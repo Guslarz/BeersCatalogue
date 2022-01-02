@@ -16,6 +16,8 @@ namespace Kaczmarek.BeersCatalogue.DaoSql
             _context = new BeersCatalogueContext(dbParams.Path);
             Beers = new Dao<Beer, IBeer>(_context, () => _context.Beers);
             Breweries = new Dao<Brewery, IBrewery>(_context, () => _context.Breweries);
+
+            _context.Database.EnsureCreated();
         }
 
         public void Dispose()

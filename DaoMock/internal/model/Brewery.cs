@@ -8,15 +8,15 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
         public string Name { get; set; }
         public string State { get; set; }
 
+        public Brewery()
+        {
+        }
+
         public Brewery(int? id, string name, string state)
         {
             Id = id;
             Name = name;
             State = state;
-        }
-
-        public Brewery()
-        {
         }
 
         public Brewery(IBrewery other) : this(other.Id, other.Name, other.State)

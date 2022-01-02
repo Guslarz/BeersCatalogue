@@ -70,6 +70,7 @@ namespace Kaczmarek.BeersCatalogue.DaoSql
             T stored = new T();
             stored.Assign(item);
             _db.Add(stored);
+            item.Id = stored.Id;
         }
     }
 }

@@ -10,8 +10,15 @@ namespace Kaczmarek.BeersCatalogue.DaoSql
         public int? Id { get; set; }
         public string Name { get; set; }
 
+        public Brewery Brewery { get; set; }
+
         [NotMapped]
-        public IBrewery Brewery { get; set; }
+        IBrewery IBeer.Brewery
+        {
+            get => Brewery;
+            set => Brewery = value as Brewery;
+        }
+
         public int Ibu { get; set; }
         public double Abv { get; set; }
         public BeerStyle Style { get; set; }
@@ -19,7 +26,7 @@ namespace Kaczmarek.BeersCatalogue.DaoSql
         public void Assign(IBeer other)
         {
             Name = other.Name;
-            Brewery = other.Brewery;
+            Brewery = other.Brewery as Brewery;
             Ibu = other.Ibu;
             Abv = other.Abv;
             Style = other.Style;
