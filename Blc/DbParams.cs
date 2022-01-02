@@ -1,6 +1,6 @@
 ﻿using Kaczmarek.BeersCatalogue.Interfaces;
 
-namespace Kaczmarek.BeersCatalogue.Blc
+namespace Kaczmarek.BeersCatalogue.BLC
 {
     public class DbParams : IDbParams
     {

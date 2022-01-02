@@ -1,4 +1,4 @@
-﻿using Kaczmarek.BeersCatalogue.Blc;
+﻿using Kaczmarek.BeersCatalogue.BLC;
 using Kaczmarek.BeersCatalogue.Interfaces;
 using System;
 

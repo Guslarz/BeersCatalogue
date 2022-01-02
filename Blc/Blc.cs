@@ -1,15 +1,15 @@
-﻿using Kaczmarek.BeersCatalogue.Core;
-using Kaczmarek.BeersCatalogue.Interfaces;
+﻿using Kaczmarek.BeersCatalogue.Interfaces;
 using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Kaczmarek.BeersCatalogue.Blc
+namespace Kaczmarek.BeersCatalogue.BLC
 {
     public class Blc : IDatabase
     {
-        // tmp - add post build event later
         private static readonly string _dllPathFormat = @"{0}.dll";
+
+        public static Blc Instance { get; private set; }
 
         private IDatabase _database;
 
@@ -17,7 +17,17 @@ namespace Kaczmarek.BeersCatalogue.Blc
 
         public IDao<IBrewery> Breweries => _database.Breweries;
 
-        public Blc(IDbParams dbParams)
+        public static void Initialize(IDbParams dbParams)
+        {
+            Instance = new Blc(dbParams);
+        }
+
+        public static void Close()
+        {
+            Instance.Dispose();
+        }
+
+        private Blc(IDbParams dbParams)
         {
             string dllPath = string.Format(_dllPathFormat, dbParams.Name);
             var assembly = Assembly.UnsafeLoadFrom(dllPath);

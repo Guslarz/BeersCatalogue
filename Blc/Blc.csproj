@@ -7,7 +7,7 @@
     <ProjectGuid>{BD0DADCE-FE34-4EA9-B52E-4DC5EBC26051}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Kaczmarek.BeersCatalogue.Blc</RootNamespace>
+    <RootNamespace>Kaczmarek.BeersCatalogue.BLC</RootNamespace>
     <AssemblyName>Blc</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

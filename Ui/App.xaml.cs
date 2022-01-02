@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Kaczmarek.BeersCatalogue.BLC;
+using Kaczmarek.BeersCatalogue.Interfaces;
 using System.Windows;
+using Kaczmarek.BeersCatalogue.Ui.Properties;
+using System.Linq;
 
 namespace Kaczmarek.BeersCatalogue.Ui
 {

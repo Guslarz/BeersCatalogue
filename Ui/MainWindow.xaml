@@ -3,10 +3,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ui"
+        xmlns:VMs="clr-namespace:Kaczmarek.BeersCatalogue.Ui.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Window.DataContext>
+        <VMs:MainViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left">
+            <Button Command="{Binding AddNewBeerCommand}">Add new beer</Button>
+
+            <ListBox Name="List" ItemsSource="{Binding Beers}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Id}" MaxWidth="50"/>
+                            <Label Content="{Binding Name}" MaxWidth="50"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <Grid DataContext="{Binding ElementName=List, Path=SelectedItem}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0">Beer Id</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}"></TextBox>
+
+            <Label Grid.Row="1" Grid.Column="0">Name</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"></TextBox>
+
+            <Label Grid.Row="2" Grid.Column="0">Brewery</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Brewery}"></TextBox>
+
+            <Label Grid.Row="3" Grid.Column="0">Ibu</Label>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu}"></TextBox>
+
+            <Label Grid.Row="4" Grid.Column="0">Abv</Label>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv}"></TextBox>
+
+            <Label Grid.Row="5" Grid.Column="0">Style</Label>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Style}"></TextBox>
+        </Grid>
+    </DockPanel>
 </Window>
