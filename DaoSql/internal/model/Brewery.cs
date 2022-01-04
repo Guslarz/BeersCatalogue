@@ -8,12 +8,12 @@ namespace Kaczmarek.BeersCatalogue.DaoSql
     {
         public int? Id { get; set; }
         public string Name { get; set; }
-        public string State { get; set; }
+        public string City { get; set; }
 
         public void Assign(IBrewery other)
         {
             Name = other.Name;
-            State = other.State;
+            City = other.City;
         }
     }
 }

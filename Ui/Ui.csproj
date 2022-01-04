@@ -169,6 +169,7 @@
     <Compile Include="ViewModel\BeerViewModel.cs" />
     <Compile Include="ViewModel\BreweryViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ValidatableViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

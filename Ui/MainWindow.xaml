@@ -9,6 +9,29 @@
     <Window.DataContext>
         <VMs:MainViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="TextBoxWithErrors" TargetType="{x:Type TextBox}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Bottom" 
+                                       Foreground="Orange" 
+                                       FontSize="9pt" 
+                                       Text="{Binding ElementName=ErrorTarget, Path=AdornedElement.(Validation.Errors)/ErrorContent}"/>
+                            <TextBlock DockPanel.Dock="Right" Foreground="Red">!</TextBlock>
+                            <Border BorderBrush="DarkRed" BorderThickness="3">
+                                <AdornedElementPlaceholder Name="ErrorTarget"/>
+                            </Border>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="MinWidth" Value="150"></Setter>
+        </Style>
+    </Window.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Left">
             <Button Command="{Binding AddNewBeerCommand}">Add new beer</Button>
@@ -38,22 +61,22 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.Column="0">Beer Id</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}"></TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"></TextBox>
 
             <Label Grid.Row="1" Grid.Column="0">Name</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
             <Label Grid.Row="2" Grid.Column="0">Brewery</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Brewery}"></TextBox>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Brewery, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
             <Label Grid.Row="3" Grid.Column="0">Ibu</Label>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu}"></TextBox>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
             <Label Grid.Row="4" Grid.Column="0">Abv</Label>
-            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv}"></TextBox>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
             <Label Grid.Row="5" Grid.Column="0">Style</Label>
-            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Style}"></TextBox>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Style, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
         </Grid>
     </DockPanel>
 </Window>

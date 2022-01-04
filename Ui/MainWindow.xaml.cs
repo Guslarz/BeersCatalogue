@@ -12,9 +12,6 @@ namespace Kaczmarek.BeersCatalogue.Ui
     /// </summary>
     public partial class MainWindow : Window
     {
-        public BeerViewModel Beer { get; set; }
-        private BeersListViewModel Beers { get; set; }
-
         public MainWindow() : base()
         {
             Blc.Initialize(loadParams());
@@ -29,9 +26,6 @@ namespace Kaczmarek.BeersCatalogue.Ui
                 newBeer.Brewery = newBrewery;
                 Blc.Instance.Beers.Save(newBeer);
             }
-
-            Beer = new BeerViewModel(Blc.Instance.Beers.GetAll().First());
-            Beers = new BeersListViewModel();
 
             InitializeComponent();
         }

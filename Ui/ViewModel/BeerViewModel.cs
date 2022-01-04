@@ -1,9 +1,10 @@
 ﻿using Kaczmarek.BeersCatalogue.Core;
 using Kaczmarek.BeersCatalogue.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
-    public class BeerViewModel : ViewModel
+    public class BeerViewModel : ValidatableViewModel
     {
         private readonly IBeer _model;
 
@@ -16,6 +17,9 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
+        [Required]
+        [MinLength(3)]
         public string Name
         {
             get => _model.Name;
@@ -33,6 +37,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
         public int Ibu
         {
             get => _model.Ibu;
@@ -42,6 +47,8 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
+        [Range(0, 1, ErrorMessage = "Abv must be in range 0, 1")]
         public double Abv
         {
             get => _model.Abv;

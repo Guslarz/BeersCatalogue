@@ -7,11 +7,11 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void NotifyProperyChanged([CallerMemberName] string propertyName = "")
+        protected virtual void NotifyProperyChanged([CallerMemberName] string propertyName = "")
         {
             if (propertyName != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

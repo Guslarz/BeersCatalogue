@@ -6,20 +6,20 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
     {
         public int? Id { get; set; }
         public string Name { get; set; }
-        public string State { get; set; }
+        public string City { get; set; }
 
         public Brewery()
         {
         }
 
-        public Brewery(int? id, string name, string state)
+        public Brewery(int? id, string name, string city)
         {
             Id = id;
             Name = name;
-            State = state;
+            City = city;
         }
 
-        public Brewery(IBrewery other) : this(other.Id, other.Name, other.State)
+        public Brewery(IBrewery other) : this(other.Id, other.Name, other.City)
         {
         }
 
@@ -31,7 +31,7 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
         public void Assign(IBrewery other)
         {
             Name = other.Name;
-            State = other.State;
+            City = other.City;
         }
     }
 }

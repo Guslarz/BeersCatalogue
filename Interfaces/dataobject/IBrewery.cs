@@ -3,6 +3,6 @@
     public interface IBrewery : IDataObject
     {
         string Name { get; set; }
-        string State { get; set; }
+        string City { get; set; }
     }
 }

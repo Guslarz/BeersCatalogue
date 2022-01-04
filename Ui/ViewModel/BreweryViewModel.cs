@@ -26,10 +26,10 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         }
         public string State
         {
-            get => _model.State;
+            get => _model.City;
             set
             {
-                _model.State = value;
+                _model.City = value;
                 NotifyProperyChanged();
             }
         }
