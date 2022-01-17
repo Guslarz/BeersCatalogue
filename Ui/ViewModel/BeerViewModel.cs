@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
-    public class BeerViewModel : ValidatableViewModel
+    public class BeerViewModel : ValidatableViewModel, IBeer
     {
         private readonly IBeer _model;
 
@@ -29,11 +29,12 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
-        public string Brewery
+        public IBrewery Brewery
         {
-            get => _model.Brewery?.Name;
+            get => _model.Brewery;
             set
             {
+                _model.Brewery = value;
                 NotifyProperyChanged();
             }
         }

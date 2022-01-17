@@ -11,13 +11,6 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         {
         }
 
-        public void AddNewBeer()
-        {
-            var model = Blc.Instance.Beers.Create();
-            model.Name = "New Beer";
-            Add(new BeerViewModel(model));
-        }
-
         private static IEnumerable<BeerViewModel> loadBeers()
         {
             return Blc.Instance.Beers.GetAll()

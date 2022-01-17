@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:VMs="clr-namespace:Kaczmarek.BeersCatalogue.Ui.ViewModel"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:core="clr-namespace:Kaczmarek.BeersCatalogue.Core;assembly=Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
@@ -31,6 +33,14 @@
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
             <Setter Property="MinWidth" Value="150"></Setter>
         </Style>
+
+        <ObjectDataProvider x:Key="BeerStyleProvider" 
+                            ObjectType="{x:Type system:Enum}"
+                            MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="core:BeerStyle"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </Window.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Left">
@@ -67,7 +77,12 @@
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
             <Label Grid.Row="2" Grid.Column="0">Brewery</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Brewery, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+            <!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Brewery, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>-->
+            <ComboBox Grid.Row="2" Grid.Column="1" 
+                      ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries}" 
+                      SelectedValue="{Binding Brewery.Id}"
+                      SelectedValuePath="Id"
+                      DisplayMemberPath="Name"/>
 
             <Label Grid.Row="3" Grid.Column="0">Ibu</Label>
             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
@@ -76,7 +91,8 @@
             <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
             <Label Grid.Row="5" Grid.Column="0">Style</Label>
-            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Style, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+            <!--<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Style, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>-->
+            <ComboBox Grid.Row="5" Grid.Column="1" SelectedValue="{Binding Style}" ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"/>
         </Grid>
     </DockPanel>
 </Window>

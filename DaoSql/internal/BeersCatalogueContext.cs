@@ -16,7 +16,15 @@ namespace Kaczmarek.BeersCatalogue.DaoSql
             _dbPath = $"{dbPath}{System.IO.Path.DirectorySeparatorChar}{_dbFilename}";
         }
 
+        public BeersCatalogueContext()
+        {
+            _dbPath = @"C:\Users\Guslarz\source\repos\BeersCatalogue\Ui\bin\Debug\" + _dbFilename;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source={_dbPath}");
+        {
+            base.OnConfiguring(options);
+            options.UseSqlite($"Data Source={_dbPath}");
+        }
     }
 }

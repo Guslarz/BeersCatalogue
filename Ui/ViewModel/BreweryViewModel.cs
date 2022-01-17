@@ -2,7 +2,7 @@
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
-    public class BreweryViewModel : ViewModel
+    public class BreweryViewModel : ViewModel, IBrewery
     {
         private readonly IBrewery _model;
 
@@ -24,7 +24,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
-        public string State
+        public string City
         {
             get => _model.City;
             set

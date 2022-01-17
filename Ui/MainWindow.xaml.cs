@@ -15,18 +15,6 @@ namespace Kaczmarek.BeersCatalogue.Ui
         public MainWindow() : base()
         {
             Blc.Initialize(loadParams());
-
-            if (Blc.Instance.Beers.GetAll().Count() == 0)
-            {
-                var newBrewery = Blc.Instance.Breweries.Create();
-                newBrewery.Name = "Some brewery";
-                Blc.Instance.Breweries.Save(newBrewery);
-                var newBeer = Blc.Instance.Beers.Create();
-                newBeer.Name = "ASDF";
-                newBeer.Brewery = newBrewery;
-                Blc.Instance.Beers.Save(newBeer);
-            }
-
             InitializeComponent();
         }
 
