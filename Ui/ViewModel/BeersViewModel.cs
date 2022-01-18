@@ -9,7 +9,6 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         protected override void Create()
         {
             var model = Blc.Instance.Beers.Create();
-            model.Name = "New Beer";
             _draft = new BeerViewModel(model);
             Selected = _draft;
         }
@@ -28,9 +27,9 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
             LoadList();
         }
 
-        protected override void Select(object beer)
+        protected override void Select(object obj)
         {
-            Selected = new BeerViewModel((BeerViewModel)beer);
+            Selected = obj != null ? new BeerViewModel((BeerViewModel)obj) : null;
         }
     }
 }

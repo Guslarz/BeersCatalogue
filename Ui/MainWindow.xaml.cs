@@ -24,7 +24,12 @@ namespace Kaczmarek.BeersCatalogue.Ui
 
         private void AddNewBeerButton_Click(object sender, RoutedEventArgs e)
         {
-            BeersList.SelectedItem = null;
+            //BeersList.SelectedItem = null;
+        }
+
+        private void AddNewBreweryButton_Click(object sender, RoutedEventArgs e)
+        {
+            //BreweriesList.SelectedItem = null;
         }
     }
 }

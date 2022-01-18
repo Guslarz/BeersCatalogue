@@ -81,6 +81,8 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
             }
         }
 
+        public IBeer Model { get; }
+
         public BeerViewModel(IBeer model) : base()
         {
             Id = model.Id;
@@ -89,6 +91,31 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
             Ibu = model.Ibu;
             Abv = model.Abv;
             Style = model.Style;
+            Model = model;
+        }
+
+        public BeerViewModel(BeerViewModel viewModel) : this(viewModel.Model)
+        {
+        }
+
+        public void Save()
+        {
+            Model.Id = Id;
+            Model.Name = Name;
+            Model.Brewery = Brewery;
+            Model.Ibu = Ibu;
+            Model.Abv = Abv;
+            Model.Style = Style;
+            Blc.Instance.Beers.Save(Model);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is IBeer))
+            {
+                return false;
+            }
+            return Id == (obj as IBeer).Id;
         }
     }
 }

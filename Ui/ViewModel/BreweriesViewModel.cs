@@ -9,7 +9,9 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
     {
         protected override void Create()
         {
-            throw new NotImplementedException();
+            var model = Blc.Instance.Breweries.Create();
+            _draft = new BreweryViewModel(model);
+            Selected = _draft;
         }
 
         protected override IEnumerable<BreweryViewModel> Load()
@@ -20,12 +22,15 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 
         protected override void Save()
         {
-            throw new NotImplementedException();
+            Blc.Instance.Breweries.Save(Selected);
+            _draft = null;
+            NotifyProperyChanged(nameof(IsDraftSelected));
+            LoadList();
         }
 
         protected override void Select(object obj)
         {
-            throw new NotImplementedException();
+            Selected = obj != null ? new BreweryViewModel((BreweryViewModel)obj) : null;
         }
     }
 }

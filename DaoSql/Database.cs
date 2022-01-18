@@ -12,12 +12,9 @@ namespace Kaczmarek.BeersCatalogue.DaoSql
 
         public Database(IDbParams dbParams)
         {
-            SQLitePCL.Batteries.Init();
             _context = new BeersCatalogueContext();
             Beers = new Dao<Beer, IBeer>(_context, () => _context.Beers);
             Breweries = new Dao<Brewery, IBrewery>(_context, () => _context.Breweries);
-
-            _context.Database.EnsureCreated();
         }
 
         public void Dispose()
