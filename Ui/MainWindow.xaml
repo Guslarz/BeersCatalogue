@@ -6,6 +6,8 @@
         xmlns:VMs="clr-namespace:Kaczmarek.BeersCatalogue.Ui.ViewModel"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:core="clr-namespace:Kaczmarek.BeersCatalogue.Core;assembly=Core"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:ui="clr-namespace:Kaczmarek.BeersCatalogue.Ui"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
@@ -41,12 +43,20 @@
                 <x:Type TypeName="core:BeerStyle"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+
+        <ui:InvertedBooleanConverter x:Key="invertedBooleanConverter"/>
     </Window.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Left">
-            <Button Command="{Binding AddNewBeerCommand}">Add new beer</Button>
+        <StackPanel DataContext="{Binding Beers}" DockPanel.Dock="Left">
+            <Button Command="{Binding CreateCommand}" IsEnabled="{Binding IsDraftSelected, Converter={StaticResource invertedBooleanConverter}}">Add new beer</Button>
+            <Button Command="{Binding SaveCommand}" IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedBooleanConverter}}">Save</Button>
 
-            <ListBox Name="List" ItemsSource="{Binding Beers}">
+            <ListBox Name="BeersList" ItemsSource="{Binding List}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:InvokeCommandAction Command="{Binding SelectCommand}" CommandParameter="{Binding ElementName=BeersList, Path=SelectedItem}"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -57,7 +67,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
-        <Grid DataContext="{Binding ElementName=List, Path=SelectedItem}">
+        <Grid DataContext="{Binding Beers.Selected}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -77,9 +87,8 @@
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
             <Label Grid.Row="2" Grid.Column="0">Brewery</Label>
-            <!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Brewery, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>-->
             <ComboBox Grid.Row="2" Grid.Column="1" 
-                      ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries}" 
+                      ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.List}" 
                       SelectedValue="{Binding Brewery.Id}"
                       SelectedValuePath="Id"
                       DisplayMemberPath="Name"/>
@@ -91,7 +100,6 @@
             <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
             <Label Grid.Row="5" Grid.Column="0">Style</Label>
-            <!--<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Style, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>-->
             <ComboBox Grid.Row="5" Grid.Column="1" SelectedValue="{Binding Style}" ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"/>
         </Grid>
     </DockPanel>

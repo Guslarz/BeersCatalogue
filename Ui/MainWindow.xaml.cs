@@ -21,7 +21,7 @@ namespace Kaczmarek.BeersCatalogue.Ui
         private IDbParams loadParams()
         {
             var settings = Settings.Default;
-            return new DbParams(settings.DbName, settings.DbPath);
+            return new DbParams(settings.DbName);
         }
     }
 }

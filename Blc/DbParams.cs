@@ -8,10 +8,9 @@ namespace Kaczmarek.BeersCatalogue.BLC
 
         public string Path { get; }
 
-        public DbParams(string dbName, string dbPath)
+        public DbParams(string dbName)
         {
             Name = dbName;
-            Path = dbPath;
         }
     }
 }
