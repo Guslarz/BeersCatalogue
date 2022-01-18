@@ -46,68 +46,83 @@
 
         <converters:InvertedNullableBooleanConverter x:Key="invertedNullableBooleanConverter"/>
         <converters:NullableBooleanConverter x:Key="nullableBooleanConverter"/>
+        <converters:VisibilityConverter x:Key="visibilityConverter"/>
     </Window.Resources>
-    <DockPanel>
-        <StackPanel DataContext="{Binding Beers}" DockPanel.Dock="Left">
-            <Button 
-                Click="AddNewBeerButton_Click"
-                Command="{Binding CreateCommand}" 
-                IsEnabled="{Binding IsDraftSelected, Converter={StaticResource invertedNullableBooleanConverter}}"
-            >
-                Add new beer
-            </Button>
-            <Button Command="{Binding SaveCommand}" IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedNullableBooleanConverter}, FallbackValue=False}">Save</Button>
+    <Grid>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>Beers</TabItem.Header>
+                <DockPanel>
+                    <StackPanel DataContext="{Binding Beers}" DockPanel.Dock="Left">
+                        <Button 
+                            Click="AddNewBeerButton_Click"
+                            Command="{Binding CreateCommand}" 
+                            IsEnabled="{Binding IsDraftSelected, Converter={StaticResource invertedNullableBooleanConverter}}"
+                        >
+                            Add new beer
+                        </Button>
+                        <Button Command="{Binding SaveCommand}" IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedNullableBooleanConverter}, FallbackValue=False}">Save</Button>
 
-            <ListBox Name="BeersList" ItemsSource="{Binding List}">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="SelectionChanged">
-                        <b:InvokeCommandAction Command="{Binding SelectCommand}" CommandParameter="{Binding ElementName=BeersList, Path=SelectedItem}"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding Id}" MaxWidth="50"/>
-                            <Label Content="{Binding Name}" MaxWidth="50"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-        <Grid DataContext="{Binding Beers.Selected}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0">Beer Id</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"></TextBox>
+                        <ListBox Name="BeersList" ItemsSource="{Binding List}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="SelectionChanged">
+                                    <b:InvokeCommandAction Command="{Binding SelectCommand}" CommandParameter="{Binding ElementName=BeersList, Path=SelectedItem}"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="{Binding Id}" MaxWidth="50"/>
+                                        <Label Content="{Binding Name}" MaxWidth="50"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                    <Grid DataContext="{Binding Beers.Selected}" Visibility="{Binding Converter={StaticResource visibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0">Beer Id</Label>
+                        <TextBox Grid.Row="0" 
+                                 Grid.Column="1" 
+                                 IsEnabled="False" 
+                                 Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"/>
 
-            <Label Grid.Row="1" Grid.Column="0">Name</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                        <Label Grid.Row="1" Grid.Column="0">Name</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-            <Label Grid.Row="2" Grid.Column="0">Brewery</Label>
-            <ComboBox Grid.Row="2" Grid.Column="1" 
-                      ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.List}" 
-                      SelectedValue="{Binding Brewery.Id}"
-                      SelectedValuePath="Id"
-                      DisplayMemberPath="Name"/>
+                        <Label Grid.Row="2" Grid.Column="0">Brewery</Label>
+                        <ComboBox Grid.Row="2" Grid.Column="1" 
+                                  ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.List}" 
+                                  SelectedValue="{Binding Brewery.Id}"
+                                  SelectedValuePath="Id"
+                                  DisplayMemberPath="Name"/>
 
-            <Label Grid.Row="3" Grid.Column="0">Ibu</Label>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                        <Label Grid.Row="3" Grid.Column="0">IBU</Label>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-            <Label Grid.Row="4" Grid.Column="0">Abv</Label>
-            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                        <Label Grid.Row="4" Grid.Column="0">Alcohol by volume</Label>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-            <Label Grid.Row="5" Grid.Column="0">Style</Label>
-            <ComboBox Grid.Row="5" Grid.Column="1" SelectedValue="{Binding Style}" ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"/>
-        </Grid>
-    </DockPanel>
+                        <Label Grid.Row="5" Grid.Column="0">Style</Label>
+                        <ComboBox Grid.Row="5" Grid.Column="1" SelectedValue="{Binding Style}" ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"/>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>Breweries</TabItem.Header>
+                Some stuff...
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>
