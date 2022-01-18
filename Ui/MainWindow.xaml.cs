@@ -1,8 +1,6 @@
 ﻿using Kaczmarek.BeersCatalogue.BLC;
 using Kaczmarek.BeersCatalogue.Interfaces;
 using Kaczmarek.BeersCatalogue.Ui.Properties;
-using Kaczmarek.BeersCatalogue.Ui.ViewModel;
-using System.Linq;
 using System.Windows;
 
 namespace Kaczmarek.BeersCatalogue.Ui
@@ -14,14 +12,19 @@ namespace Kaczmarek.BeersCatalogue.Ui
     {
         public MainWindow() : base()
         {
-            Blc.Initialize(loadParams());
+            Blc.Initialize(LoadParams());
             InitializeComponent();
         }
 
-        private IDbParams loadParams()
+        private IDbParams LoadParams()
         {
             var settings = Settings.Default;
             return new DbParams(settings.DbName);
+        }
+
+        private void AddNewBeerButton_Click(object sender, RoutedEventArgs e)
+        {
+            BeersList.SelectedItem = null;
         }
     }
 }

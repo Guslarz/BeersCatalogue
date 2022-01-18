@@ -1,8 +1,9 @@
 ﻿using Kaczmarek.BeersCatalogue.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
-    public class BreweryViewModel : ViewModel, IBrewery
+    public class BreweryViewModel : ValidatableViewModel, IBrewery
     {
         private readonly IBrewery _model;
 
@@ -15,6 +16,9 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
+        [Required]
+        [MinLength(3)]
         public string Name
         {
             get => _model.Name;
@@ -24,6 +28,9 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
+        [Required]
+        [MinLength(3)]
         public string City
         {
             get => _model.City;

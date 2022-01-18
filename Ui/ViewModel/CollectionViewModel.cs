@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
     public abstract class CollectionViewModel<T> : ViewModel 
-        where T : class
+        where T : ValidatableViewModel
     {
         private T _selected;
 
@@ -36,7 +39,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
             SaveCommand = new RelayCommand(param => Save());
             SelectCommand = new RelayCommand(Select);
             _draft = null;
-            _selected = null;
+            Selected = null;
         }
 
         protected abstract void Create();

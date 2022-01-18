@@ -2,19 +2,20 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Kaczmarek.BeersCatalogue.Ui
+namespace Kaczmarek.BeersCatalogue.Ui.Converters
 {
     [ValueConversion(typeof(bool), typeof(bool))]
-    public class InvertedBooleanConverter : IValueConverter
+    public class NullableBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            Console.WriteLine(value);
+            return (bool)(value ?? false);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            return Convert(value, targetType, parameter, culture);
         }
     }
 }

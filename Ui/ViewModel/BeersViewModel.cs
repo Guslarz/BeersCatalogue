@@ -23,13 +23,14 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         protected override void Save()
         {
             Blc.Instance.Beers.Save(Selected);
-            Selected = null;
+            _draft = null;
+            NotifyProperyChanged(nameof(IsDraftSelected));
             LoadList();
         }
 
         protected override void Select(object beer)
         {
-            Selected = (BeerViewModel)beer;
+            Selected = new BeerViewModel((BeerViewModel)beer);
         }
     }
 }

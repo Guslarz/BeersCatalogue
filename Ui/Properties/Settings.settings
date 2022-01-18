@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DbName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">DaoMock</Value>
+      <Value Profile="(Default)">DaoSql</Value>
     </Setting>
   </Settings>
 </SettingsFile>

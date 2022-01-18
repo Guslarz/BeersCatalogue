@@ -25,7 +25,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("DaoMock")]
+        [global::System.Configuration.DefaultSettingValueAttribute("DaoSql")]
         public string DbName {
             get {
                 return ((string)(this["DbName"]));

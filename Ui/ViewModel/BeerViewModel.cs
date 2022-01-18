@@ -1,4 +1,5 @@
-﻿using Kaczmarek.BeersCatalogue.Core;
+﻿using Kaczmarek.BeersCatalogue.BLC;
+using Kaczmarek.BeersCatalogue.Core;
 using Kaczmarek.BeersCatalogue.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,14 +7,19 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
     public class BeerViewModel : ValidatableViewModel, IBeer
     {
-        private readonly IBeer _model;
+        private int? _id;
+        private string _name;
+        private IBrewery _brewery;
+        private int _ibu;
+        private double _abv;
+        private BeerStyle _style;
 
         public int? Id
         {
-            get => _model.Id;
+            get => _id;
             set
             {
-                _model.Id = value;
+                _id = value;
                 NotifyProperyChanged();
             }
         }
@@ -22,56 +28,67 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         [MinLength(3)]
         public string Name
         {
-            get => _model.Name;
+            get => _name;
             set
             {
-                _model.Name = value;
+                _name = value;
                 NotifyProperyChanged();
             }
         }
+        
         public IBrewery Brewery
         {
-            get => _model.Brewery;
+            get => _brewery;
             set
             {
-                _model.Brewery = value;
+                _brewery = value;
                 NotifyProperyChanged();
             }
         }
 
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Ibu {0} must be greater than {1}.")]
         public int Ibu
         {
-            get => _model.Ibu;
+            get => _ibu;
             set
             {
-                _model.Ibu = value;
+                _ibu = value;
                 NotifyProperyChanged();
             }
         }
 
+        [Required]
         [Range(0, 1, ErrorMessage = "Abv must be in range 0, 1")]
         public double Abv
         {
-            get => _model.Abv;
+            get => _abv;
             set
             {
-                _model.Abv = value;
+                _abv = value;
                 NotifyProperyChanged();
             }
         }
+
+        [Required]
         public BeerStyle Style
         {
-            get => _model.Style;
+            get => _style;
             set
             {
-                _model.Style = value;
+                _style = value;
                 NotifyProperyChanged();
             }
         }
 
         public BeerViewModel(IBeer model) : base()
         {
-            _model = model;
+            Id = model.Id;
+            Name = model.Name;
+            Brewery = model.Brewery;
+            Ibu = model.Ibu;
+            Abv = model.Abv;
+            Style = model.Style;
         }
     }
 }

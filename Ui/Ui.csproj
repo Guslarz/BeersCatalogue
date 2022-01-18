@@ -167,7 +167,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="InvertedBooleanConverter.cs" />
+    <Compile Include="Converters\InvertedNullableBooleanConverter.cs" />
+    <Compile Include="Converters\NullableBooleanConverter.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModel\BeersViewModel.cs" />
     <Compile Include="ViewModel\BeerViewModel.cs" />

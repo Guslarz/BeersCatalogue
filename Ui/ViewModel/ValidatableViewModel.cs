@@ -33,7 +33,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         protected override void NotifyProperyChanged([CallerMemberName] string propertyName = "")
         {
             base.NotifyProperyChanged(propertyName);
-            if (propertyName != "HasErrors")
+            if (propertyName != nameof(HasErrors))
             {
                 Validate();
             }
