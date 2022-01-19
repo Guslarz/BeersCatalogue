@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
-    public abstract class CollectionViewModel<T> : ViewModel 
-        where T : ValidatableViewModel
+    public abstract class CollectionViewModel<T, FilterViewModel, I> : ViewModel
+        where T : ValidatableViewModel, I
+        where FilterViewModel : ViewModel, IFilter<I>, new()
     {
         private T _selected;
+        private FilterViewModel _filter;
+        private ObservableCollection<T> _list;
 
         protected T _draft;
 
         public ICommand CreateCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand SelectCommand { get; }
+        public ICommand ApplyFilterCommand { get; }
+        public ICommand ResetFilterCommand { get; }
 
         public bool IsDraftSelected { get => _draft != null && _draft == _selected; }
         public T Selected
@@ -29,8 +32,25 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged(nameof(IsDraftSelected));
             }
         }
+        public FilterViewModel Filter
+        {
+            get => _filter;
+            protected set
+            {
+                _filter = value;
+                NotifyProperyChanged();
+            }
+        }
 
-        public ObservableCollection<T> List { get; private set; }
+        public ObservableCollection<T> List
+        {
+            get => _list;
+            private set
+            {
+                _list = value;
+                NotifyProperyChanged();
+            }
+        }
 
         public CollectionViewModel() : base()
         {
@@ -38,8 +58,11 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
             CreateCommand = new RelayCommand(param => Create());
             SaveCommand = new RelayCommand(param => Save());
             SelectCommand = new RelayCommand(Select);
+            ApplyFilterCommand = new RelayCommand(param => ApplyFilter());
+            ResetFilterCommand = new RelayCommand(param => ResetFilter());
             _draft = null;
             Selected = null;
+            Filter = new FilterViewModel();
         }
 
         protected abstract void Create();
@@ -53,7 +76,18 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         protected void LoadList()
         {
             List = new ObservableCollection<T>(Load());
-            NotifyProperyChanged(nameof(List));
+        }
+
+        private void ApplyFilter()
+        {
+            List = new ObservableCollection<T>(Load()
+                .Where(Filter.Test));
+        }
+
+        private void ResetFilter()
+        {
+            LoadList();
+            Filter.Reset();
         }
     }
 }

@@ -84,6 +84,7 @@
         <converters:InvertedNullableBooleanConverter x:Key="invertedNullableBooleanConverter"/>
         <converters:NullableBooleanConverter x:Key="nullableBooleanConverter"/>
         <converters:VisibilityConverter x:Key="visibilityConverter"/>
+        <converters:InvertedVisibilityConverter x:Key="invertedVisibilityConverter"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -129,48 +130,113 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </Grid>
-                    <Grid DataContext="{Binding Beers.Selected}" Visibility="{Binding Converter={StaticResource visibilityConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultLabel}">Beer Id</Label>
-                        <TextBox Grid.Row="0" 
-                                 Grid.Column="1" 
-                                 IsEnabled="False" 
-                                 Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"
-                                 Style="{StaticResource TextBoxWithErrors}"/>
+                    <Grid>
+                        <TabControl>
+                            <TabItem>
+                                <TabItem.Header>Beer</TabItem.Header>
+                                <Grid>
+                                    <Grid DataContext="{Binding Beers.Selected}" Visibility="{Binding Converter={StaticResource visibilityConverter}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultLabel}">Beer Id</Label>
+                                        <TextBox Grid.Row="0" 
+                                             Grid.Column="1" 
+                                             IsEnabled="False" 
+                                             Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"
+                                             Style="{StaticResource TextBoxWithErrors}"/>
 
-                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultLabel}">Name</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultLabel}">Name</Label>
+                                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-                        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultLabel}">Brewery</Label>
-                        <ComboBox Grid.Row="2" Grid.Column="1" 
-                                  ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.List}" 
-                                  SelectedValue="{Binding Brewery}"
-                                  SelectedValuePath="Model"
-                                  DisplayMemberPath="Name"
-                                  Style="{StaticResource ComboBoxWithErrors}"/>
+                                        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultLabel}">Brewery</Label>
+                                        <ComboBox Grid.Row="2" Grid.Column="1" 
+                                              ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.List}" 
+                                              SelectedValue="{Binding Brewery}"
+                                              SelectedValuePath="Model"
+                                              DisplayMemberPath="Name"
+                                              Style="{StaticResource ComboBoxWithErrors}"/>
 
-                        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource DefaultLabel}">IBU</Label>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                                        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource DefaultLabel}">IBU</Label>
+                                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-                        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource DefaultLabel}">Alcohol by volume</Label>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                                        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource DefaultLabel}">Alcohol by volume</Label>
+                                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-                        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource DefaultLabel}">Style</Label>
-                        <ComboBox Grid.Row="5" Grid.Column="1" 
-                                  SelectedValue="{Binding Style}" 
-                                  ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"
-                                  Style="{StaticResource ComboBoxWithErrors}"/>
+                                        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource DefaultLabel}">Style</Label>
+                                        <ComboBox Grid.Row="5" Grid.Column="1" 
+                                              SelectedValue="{Binding Style}" 
+                                              ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"
+                                              Style="{StaticResource ComboBoxWithErrors}"/>
+                                    </Grid>
+                                    <Label Visibility="{Binding Beers.Selected, Converter={StaticResource invertedVisibilityConverter}}">No beer selected</Label>
+                                </Grid>
+                            </TabItem>
+                            <TabItem>
+                                <TabItem.Header>Search</TabItem.Header>
+                                <Grid DataContext="{Binding Beers.Filter}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultLabel}">Name</Label>
+                                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+
+                                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultLabel}">Brewery</Label>
+                                    <ComboBox Grid.Row="1" Grid.Column="1" 
+                                              ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.List}" 
+                                              SelectedValue="{Binding Brewery}"
+                                              SelectedValuePath="Model"
+                                              DisplayMemberPath="Name"
+                                              Style="{StaticResource ComboBoxWithErrors}"/>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultLabel}">Minimum IBU</Label>
+                                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding MinIbu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+
+                                    <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource DefaultLabel}">Maximum IBU</Label>
+                                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding MaxIbu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+
+                                    <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource DefaultLabel}">Minimum ABV</Label>
+                                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding MinAbv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+
+                                    <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource DefaultLabel}">Maximum ABV</Label>
+                                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding MaxAbv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+
+                                    <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource DefaultLabel}">Style</Label>
+                                    <ComboBox Grid.Row="6" Grid.Column="1" 
+                                              SelectedValue="{Binding Style}" 
+                                              ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"
+                                              Style="{StaticResource ComboBoxWithErrors}"/>
+
+                                    <Button Grid.Row="7" Grid.Column="0" Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Beers.ApplyFilterCommand}">
+                                        Search
+                                    </Button>
+                                    <Button Grid.Row="7" Grid.Column="1" Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Beers.ResetFilterCommand}">
+                                        Reset
+                                    </Button>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
                     </Grid>
                 </DockPanel>
             </TabItem>
@@ -210,34 +276,71 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label Content="{Binding Id}" MaxWidth="50"/>
-                                        <Label Content="{Binding Name}" MaxWidth="50"/>
+                                        <Label Content="{Binding Id}"/>
+                                        <Label Content="{Binding Name}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </Grid>
-                    <Grid DataContext="{Binding Breweries.Selected}" Visibility="{Binding Converter={StaticResource visibilityConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultLabel}">Brewery Id</Label>
-                        <TextBox Grid.Row="0" 
-                                 Grid.Column="1" 
-                                 IsEnabled="False" 
-                                 Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"/>
+                    <Grid>
+                        <TabControl>
+                            <TabItem>
+                                <TabItem.Header>Brewery</TabItem.Header>
+                                <Grid>
+                                    <Grid DataContext="{Binding Breweries.Selected}" Visibility="{Binding Converter={StaticResource visibilityConverter}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                            <RowDefinition MaxHeight="50"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultLabel}">Brewery Id</Label>
+                                        <TextBox Grid.Row="0" 
+                                             Grid.Column="1" 
+                                             Style="{StaticResource TextBoxWithoutErrors}"
+                                             IsEnabled="False" 
+                                             Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"/>
 
-                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultLabel}">Name</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultLabel}">Name</Label>
+                                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-                        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultLabel}">City</Label>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding City, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                                        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultLabel}">City</Label>
+                                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding City, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+                                    </Grid>
+                                    <Label Visibility="{Binding Breweries.Selected, Converter={StaticResource invertedVisibilityConverter}}">No brewery selected</Label>
+                                </Grid>
+                            </TabItem>
+                            <TabItem>
+                                <TabItem.Header>Search</TabItem.Header>
+                                <Grid DataContext="{Binding Breweries.Filter}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                        <RowDefinition MaxHeight="50"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultLabel}">Name</Label>
+                                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+
+                                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultLabel}">City</Label>
+                                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding City, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
+
+                                    <Button Grid.Row="7" Grid.Column="0" Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.ApplyFilterCommand}">
+                                        Search
+                                    </Button>
+                                    <Button Grid.Row="7" Grid.Column="1" Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.ResetFilterCommand}">
+                                        Reset
+                                    </Button>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
                     </Grid>
                 </DockPanel>
             </TabItem>

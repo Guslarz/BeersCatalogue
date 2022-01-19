@@ -169,13 +169,17 @@
     </ApplicationDefinition>
     <Compile Include="Converters\InvertedNullableBooleanConverter.cs" />
     <Compile Include="Converters\NullableBooleanConverter.cs" />
+    <Compile Include="Converters\InvertedVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="ViewModel\BeerFilterViewModel.cs" />
     <Compile Include="ViewModel\BeersViewModel.cs" />
     <Compile Include="ViewModel\BeerViewModel.cs" />
     <Compile Include="ViewModel\BreweriesViewModel.cs" />
+    <Compile Include="ViewModel\BreweryFilterViewModel.cs" />
     <Compile Include="ViewModel\BreweryViewModel.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\IFilter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ValidatableViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />

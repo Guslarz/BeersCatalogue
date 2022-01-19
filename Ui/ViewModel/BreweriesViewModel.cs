@@ -1,11 +1,11 @@
 ﻿using Kaczmarek.BeersCatalogue.BLC;
-using System;
+using Kaczmarek.BeersCatalogue.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
-    public class BreweriesViewModel : CollectionViewModel<BreweryViewModel>
+    public class BreweriesViewModel : CollectionViewModel<BreweryViewModel, BreweryFilterViewModel, IBrewery>
     {
         protected override void Create()
         {
