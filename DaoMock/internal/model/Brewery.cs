@@ -1,4 +1,5 @@
 ﻿using Kaczmarek.BeersCatalogue.Interfaces;
+using System;
 
 namespace Kaczmarek.BeersCatalogue.DaoMock
 {
@@ -32,6 +33,21 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
         {
             Name = other.Name;
             City = other.City;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is IBrewery))
+            {
+                return false;
+            }
+            return Id == (obj as IBrewery).Id;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Id);
+            return hashCode.ToHashCode();
         }
     }
 }

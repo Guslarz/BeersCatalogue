@@ -1,5 +1,4 @@
 ﻿using Kaczmarek.BeersCatalogue.Core;
-using Kaczmarek.BeersCatalogue.Interfaces;
 using System.Collections.Generic;
 
 namespace Kaczmarek.BeersCatalogue.DaoMock
@@ -10,16 +9,19 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
         {
             Breweries = new Dictionary<int, Brewery>()
             {
-                { 0, new Brewery(0, "Brewery1", "State1") },
-                { 1, new Brewery(1, "Brewery2", "State1") },
-                { 2, new Brewery(2, "Brewery3", "State2") },
+                { 0, new Brewery(0, "Pinta", "Wieprz") },
+                { 1, new Brewery(1, "Browar Fortuna", "Miłosław") },
+                { 2, new Brewery(2, "Browar Za Miastem", "Rumianek") }
             };
 
             Beers = new Dictionary<int, Beer>()
             {
-                { 0, new Beer(0, "Beer1", Breweries[0], 30, 0.04, BeerStyle.Lager) },
-                { 1, new Beer(1, "Beer2", Breweries[2], 90, 0.08, BeerStyle.Ipa) },
-                { 2, new Beer(2, "Beer3", Breweries[2], 50, 0.09, BeerStyle.Stout) },
+                { 0, new Beer(0, "Atak Chmielu", Breweries[0], 58, 0.061, BeerStyle.Ipa ) },
+                { 1, new Beer(1,  "Na Wypasie", Breweries[2], 35, 0.045, BeerStyle.Ipa) },
+                { 2, new Beer(2, "Dobra Noc", Breweries[2], 30, 0.058, BeerStyle.Stout) },
+                { 3, new Beer(3, "Komes Porter Bałtycki", Breweries[1], 35, 0.09, BeerStyle.Porter ) },
+                { 4, new Beer(4, "Miłosław Witbier", Breweries[1], 17, 0.048, BeerStyle.Other ) },
+                { 5, new Beer(5, "Własne Sprawy", Breweries[2], 45, 0.056, BeerStyle.Apa ) },
             };
         }
 

@@ -14,7 +14,44 @@
         <VMs:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        <Style x:Key="TextBoxWithErrors" TargetType="{x:Type TextBox}">
+        <Style x:Key="DefaultListBox" TargetType="ListBox">
+            <Setter Property="MinWidth" Value="200"></Setter>
+            <Setter Property="MaxWidth" Value="200"></Setter>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"></Setter>
+        </Style>
+        
+        <Style x:Key="DefaultLabel" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="MinWidth" Value="150"></Setter>
+        </Style>
+        
+        <Style x:Key="TextBoxWithoutErrors" TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="MinWidth" Value="150"></Setter>
+        </Style>
+        
+        <Style x:Key="TextBoxWithErrors" TargetType="TextBox" BasedOn="{StaticResource TextBoxWithoutErrors}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Bottom" 
+                                       Foreground="Orange" 
+                                       FontSize="9pt" 
+                                       Text="{Binding ElementName=ErrorTarget, Path=AdornedElement.(Validation.Errors)/ErrorContent}"/>
+                            <TextBlock DockPanel.Dock="Right" Foreground="Red">!</TextBlock>
+                            <Border BorderBrush="DarkRed" BorderThickness="3">
+                                <AdornedElementPlaceholder Name="ErrorTarget"/>
+                            </Border>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ComboBoxWithErrors" TargetType="ComboBox">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>
@@ -53,16 +90,30 @@
             <TabItem>
                 <TabItem.Header>Beers</TabItem.Header>
                 <DockPanel>
-                    <StackPanel DataContext="{Binding Beers}" DockPanel.Dock="Left">
+                    <Grid DataContext="{Binding Beers}" DockPanel.Dock="Left">
+                        <Grid.RowDefinitions>
+                            <RowDefinition MaxHeight="25"></RowDefinition>
+                            <RowDefinition MaxHeight="25"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
                         <Button 
+                            Grid.Row="0"
                             Command="{Binding CreateCommand}" 
                             IsEnabled="{Binding IsDraftSelected, Converter={StaticResource invertedNullableBooleanConverter}}"
                         >
                             Add new beer
                         </Button>
-                        <Button Command="{Binding SaveCommand}" IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedNullableBooleanConverter}, FallbackValue=False}">Save</Button>
+                        
+                        <Button 
+                            Grid.Row="1"
+                            Command="{Binding SaveCommand}" 
+                            IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedNullableBooleanConverter}, FallbackValue=False}"
+                        >
+                            Save
+                        </Button>
 
-                        <ListBox Name="BeersList" ItemsSource="{Binding List}">
+                        <ListBox Grid.Row="2" Name="BeersList" ItemsSource="{Binding List}" Style="{StaticResource DefaultListBox}">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SelectionChanged">
                                     <b:InvokeCommandAction Command="{Binding SelectCommand}" CommandParameter="{Binding ElementName=BeersList, Path=SelectedItem}"/>
@@ -70,14 +121,14 @@
                             </b:Interaction.Triggers>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label Content="{Binding Id}" MaxWidth="50"/>
-                                        <Label Content="{Binding Name}" MaxWidth="50"/>
+                                    <StackPanel Orientation="Horizontal" CanVerticallyScroll="True">
+                                        <Label Content="{Binding Id}"/>
+                                        <Label Content="{Binding Name}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                    </StackPanel>
+                    </Grid>
                     <Grid DataContext="{Binding Beers.Selected}" Visibility="{Binding Converter={StaticResource visibilityConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -91,47 +142,66 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0">Beer Id</Label>
+                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultLabel}">Beer Id</Label>
                         <TextBox Grid.Row="0" 
                                  Grid.Column="1" 
                                  IsEnabled="False" 
-                                 Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"/>
+                                 Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"
+                                 Style="{StaticResource TextBoxWithErrors}"/>
 
-                        <Label Grid.Row="1" Grid.Column="0">Name</Label>
+                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultLabel}">Name</Label>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-                        <Label Grid.Row="2" Grid.Column="0">Brewery</Label>
+                        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultLabel}">Brewery</Label>
                         <ComboBox Grid.Row="2" Grid.Column="1" 
                                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Breweries.List}" 
                                   SelectedValue="{Binding Brewery}"
                                   SelectedValuePath="Model"
-                                  DisplayMemberPath="Name"/>
+                                  DisplayMemberPath="Name"
+                                  Style="{StaticResource ComboBoxWithErrors}"/>
 
-                        <Label Grid.Row="3" Grid.Column="0">IBU</Label>
+                        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource DefaultLabel}">IBU</Label>
                         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ibu, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-                        <Label Grid.Row="4" Grid.Column="0">Alcohol by volume</Label>
+                        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource DefaultLabel}">Alcohol by volume</Label>
                         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Abv, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-                        <Label Grid.Row="5" Grid.Column="0">Style</Label>
-                        <ComboBox Grid.Row="5" Grid.Column="1" SelectedValue="{Binding Style}" ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"/>
+                        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource DefaultLabel}">Style</Label>
+                        <ComboBox Grid.Row="5" Grid.Column="1" 
+                                  SelectedValue="{Binding Style}" 
+                                  ItemsSource="{Binding Source={StaticResource BeerStyleProvider}}"
+                                  Style="{StaticResource ComboBoxWithErrors}"/>
                     </Grid>
                 </DockPanel>
             </TabItem>
             <TabItem>
                 <TabItem.Header>Breweries</TabItem.Header>
                 <DockPanel>
-                    <StackPanel DataContext="{Binding Breweries}" DockPanel.Dock="Left">
+                    <Grid DataContext="{Binding Breweries}" DockPanel.Dock="Left">
+                        <Grid.RowDefinitions>
+                            <RowDefinition MaxHeight="25"></RowDefinition>
+                            <RowDefinition MaxHeight="25"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
                         <Button 
+                            Grid.Row="0"
                             Click="AddNewBreweryButton_Click"
                             Command="{Binding CreateCommand}" 
                             IsEnabled="{Binding IsDraftSelected, Converter={StaticResource invertedNullableBooleanConverter}}"
                         >
                             Add new brewery
                         </Button>
-                        <Button Command="{Binding SaveCommand}" IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedNullableBooleanConverter}, FallbackValue=False}">Save</Button>
+                        
+                        <Button 
+                            Grid.Row="1"
+                            Command="{Binding SaveCommand}" 
+                            IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedNullableBooleanConverter}, FallbackValue=False}"
+                        >
+                            Save
+                        </Button>
 
-                        <ListBox Name="BreweriesList" ItemsSource="{Binding List}">
+                        <ListBox Grid.Row="2" Name="BreweriesList" ItemsSource="{Binding List}" Style="{StaticResource DefaultListBox}">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SelectionChanged">
                                     <b:InvokeCommandAction Command="{Binding SelectCommand}" CommandParameter="{Binding ElementName=BreweriesList, Path=SelectedItem}"/>
@@ -146,7 +216,7 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                    </StackPanel>
+                    </Grid>
                     <Grid DataContext="{Binding Breweries.Selected}" Visibility="{Binding Converter={StaticResource visibilityConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -157,16 +227,16 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0">Brewery Id</Label>
+                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultLabel}">Brewery Id</Label>
                         <TextBox Grid.Row="0" 
                                  Grid.Column="1" 
                                  IsEnabled="False" 
                                  Text="{Binding Id, ValidatesOnNotifyDataErrors=True}"/>
 
-                        <Label Grid.Row="1" Grid.Column="0">Name</Label>
+                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultLabel}">Name</Label>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
 
-                        <Label Grid.Row="2" Grid.Column="0">City</Label>
+                        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultLabel}">City</Label>
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding City, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBoxWithErrors}"></TextBox>
                     </Grid>
                 </DockPanel>

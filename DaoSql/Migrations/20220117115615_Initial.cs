@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Kaczmarek.BeersCatalogue.Core;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Kaczmarek.BeersCatalogue.DaoSql.Migrations
 {
@@ -47,6 +48,32 @@ namespace Kaczmarek.BeersCatalogue.DaoSql.Migrations
                 name: "IX_Beers_BreweryId",
                 table: "Beers",
                 column: "BreweryId");
+
+            migrationBuilder.InsertData(
+                table: "Breweries",
+                columns: new[] { "Id", "Name", "City" },
+                values: new object[,]
+                {
+                    { 1, "Pinta", "Wieprz" },
+                    { 2, "Browar Fortuna", "Miłosław" },
+                    { 3, "Browar Za Miastem", "Rumianek" }
+                }
+            );
+
+            migrationBuilder.InsertData(
+                table: "Beers",
+                columns: new[] { "Id", "Name", "BreweryId", "Ibu", "Abv", "Style" },
+                values: new object[,]
+                {
+                    { 1, "Atak Chmielu", 1, 58, 0.061, (int) BeerStyle.Ipa },
+                    { 2, "Na Wypasie", 3, 35, 0.045, (int) BeerStyle.Ipa },
+                    { 3, "Dobra Noc", 3, 30, 0.058, (int) BeerStyle.Stout },
+                    { 4, "Komes Porter Bałtycki", 2, 35, 0.09, (int) BeerStyle.Porter },
+                    { 5, "Miłosław Witbier", 2, 17, 0.048, (int) BeerStyle.Other },
+                    { 6, "Własne Sprawy", 3, 45, 0.056, (int) BeerStyle.Apa },
+                    { 7, "Miłosław Chmielowy Lager", 2, 27, 0.045, (int) BeerStyle.Lager }
+                }
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

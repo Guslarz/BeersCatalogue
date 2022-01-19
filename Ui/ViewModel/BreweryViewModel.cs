@@ -1,5 +1,6 @@
 ﻿using Kaczmarek.BeersCatalogue.BLC;
 using Kaczmarek.BeersCatalogue.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
@@ -73,6 +74,13 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 return false;
             }
             return Id == (obj as IBrewery).Id;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Id);
+            return hashCode.ToHashCode();
         }
     }
 }

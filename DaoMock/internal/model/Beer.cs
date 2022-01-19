@@ -1,5 +1,6 @@
 ﻿using Kaczmarek.BeersCatalogue.Core;
 using Kaczmarek.BeersCatalogue.Interfaces;
+using System;
 
 namespace Kaczmarek.BeersCatalogue.DaoMock
 {
@@ -42,6 +43,22 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
             Ibu = other.Ibu;
             Abv = other.Abv;
             Style = other.Style;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is IBeer))
+            {
+                return false;
+            }
+            return Id == (obj as IBeer).Id;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Id);
+            return hashCode.ToHashCode();
         }
     }
 }
