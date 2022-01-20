@@ -48,7 +48,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         }
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "Ibu {0} must be greater than {1}.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Ibu must be greater than {1}.")]
         public int Ibu
         {
             get => _ibu;

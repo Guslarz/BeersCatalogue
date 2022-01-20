@@ -1,9 +1,10 @@
 ﻿using Kaczmarek.BeersCatalogue.Core;
 using Kaczmarek.BeersCatalogue.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 {
-    public class BeerFilterViewModel : ViewModel, IFilter<IBeer>
+    public class BeerFilterViewModel : ValidatableViewModel, IFilter<IBeer>
     {
         private string _name;
         private IBrewery _brewery;
@@ -22,6 +23,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
         public IBrewery Brewery
         {
             get => _brewery;
@@ -31,6 +33,8 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Ibu must be greater than {1}.")]
         public int? MinIbu
         {
             get => _minIbu;
@@ -40,6 +44,8 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Ibu must be greater than {1}.")]
         public int? MaxIbu
         {
             get => _maxIbu;
@@ -49,6 +55,8 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
+        [Range(0, 1, ErrorMessage = "Abv must be in range 0, 1")]
         public double? MinAbv
         {
             get => _minAbv;
@@ -58,6 +66,8 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
+        [Range(0, 1, ErrorMessage = "Abv must be in range 0, 1")]
         public double? MaxAbv
         {
             get => _maxAbv;
@@ -67,6 +77,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
                 NotifyProperyChanged();
             }
         }
+
         public BeerStyle? Style
         {
             get => _style;

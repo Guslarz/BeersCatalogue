@@ -31,17 +31,26 @@
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
             <Setter Property="MinWidth" Value="150"></Setter>
         </Style>
+
+        <Style x:Key="ErrorMessageTextBlock" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="MinWidth" Value="150"></Setter>
+            <Setter Property="DockPanel.Dock" Value="Bottom"/>
+            <Setter Property="Foreground" Value="Orange"/>
+            <Setter Property="FontSize" Value="8pt"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+            <Setter Property="LineHeight" Value="9pt"/>
+        </Style>
         
         <Style x:Key="TextBoxWithErrors" TargetType="TextBox" BasedOn="{StaticResource TextBoxWithoutErrors}">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>
                         <DockPanel LastChildFill="True">
-                            <TextBlock DockPanel.Dock="Bottom" 
-                                       Foreground="Orange" 
-                                       FontSize="9pt" 
+                            <TextBlock Style="{StaticResource ErrorMessageTextBlock}"
                                        Text="{Binding ElementName=ErrorTarget, Path=AdornedElement.(Validation.Errors)/ErrorContent}"/>
-                            <TextBlock DockPanel.Dock="Right" Foreground="Red">!</TextBlock>
                             <Border BorderBrush="DarkRed" BorderThickness="3">
                                 <AdornedElementPlaceholder Name="ErrorTarget"/>
                             </Border>
@@ -56,9 +65,7 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <DockPanel LastChildFill="True">
-                            <TextBlock DockPanel.Dock="Bottom" 
-                                       Foreground="Orange" 
-                                       FontSize="9pt" 
+                            <TextBlock Style="{StaticResource ErrorMessageTextBlock}"
                                        Text="{Binding ElementName=ErrorTarget, Path=AdornedElement.(Validation.Errors)/ErrorContent}"/>
                             <TextBlock DockPanel.Dock="Right" Foreground="Red">!</TextBlock>
                             <Border BorderBrush="DarkRed" BorderThickness="3">
@@ -252,7 +259,6 @@
                         
                         <Button 
                             Grid.Row="0"
-                            Click="AddNewBreweryButton_Click"
                             Command="{Binding CreateCommand}" 
                             IsEnabled="{Binding IsDraftSelected, Converter={StaticResource invertedNullableBooleanConverter}}"
                         >
