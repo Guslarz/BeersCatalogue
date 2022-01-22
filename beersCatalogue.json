@@ -9,18 +9,10 @@
       "Style": 1
     },
     {
-      "Id": 1,
-      "Name": "Na Wypasie",
-      "BreweryId": 2,
-      "Ibu": 35,
-      "Abv": 0.044999999999999998,
-      "Style": 1
-    },
-    {
       "Id": 2,
       "Name": "Dobra Noc",
       "BreweryId": 2,
-      "Ibu": 80,
+      "Ibu": 30,
       "Abv": 0.058000000000000003,
       "Style": 4
     },
@@ -41,11 +33,19 @@
       "Style": 5
     },
     {
-      "Id": 5,
-      "Name": "W\u0142asne Sprawy",
-      "BreweryId": 2,
-      "Ibu": 45,
-      "Abv": 0.056000000000000001,
+      "Id": 6,
+      "Name": "asda",
+      "BreweryId": 1,
+      "Ibu": 0,
+      "Abv": 0,
+      "Style": 0
+    },
+    {
+      "Id": 7,
+      "Name": "AAAAA",
+      "BreweryId": 0,
+      "Ibu": 0,
+      "Abv": 0,
       "Style": 0
     }
   ],

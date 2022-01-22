@@ -86,12 +86,12 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 
         public BeerViewModel(IBeer model) : base()
         {
-            Id = model.Id;
-            Name = model.Name;
-            Brewery = model.Brewery;
-            Ibu = model.Ibu;
-            Abv = model.Abv;
-            Style = model.Style;
+            _id = model.Id;
+            _name = model.Name;
+            _brewery = model.Brewery;
+            _ibu = model.Ibu;
+            _abv = model.Abv;
+            _style = model.Style;
             Model = model;
         }
 

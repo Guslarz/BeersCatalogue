@@ -49,9 +49,9 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 
         public BreweryViewModel(IBrewery model) : base()
         {
-            Id = model.Id;
-            Name = model.Name;
-            City = model.City;
+            _id = model.Id;
+            _name = model.Name;
+            _city = model.City;
             Model = model;
         }
 

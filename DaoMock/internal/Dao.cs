@@ -57,8 +57,8 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
 
         private void Insert(I item)
         {
-            item.Id = _nextId;
             T stored = new T();
+            stored.Id = _nextId;
             stored.Assign(item);
             _store[_nextId] = stored;
             ++_nextId;

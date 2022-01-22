@@ -92,6 +92,7 @@
         <converters:NullableBooleanConverter x:Key="nullableBooleanConverter"/>
         <converters:VisibilityConverter x:Key="visibilityConverter"/>
         <converters:InvertedVisibilityConverter x:Key="invertedVisibilityConverter"/>
+        <converters:IsNotNullConverter x:Key="isNotNullConverter"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -100,6 +101,7 @@
                 <DockPanel>
                     <Grid DataContext="{Binding Beers}" DockPanel.Dock="Left">
                         <Grid.RowDefinitions>
+                            <RowDefinition MaxHeight="25"></RowDefinition>
                             <RowDefinition MaxHeight="25"></RowDefinition>
                             <RowDefinition MaxHeight="25"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -121,7 +123,15 @@
                             Save
                         </Button>
 
-                        <ListBox Grid.Row="2" Name="BeersList" ItemsSource="{Binding List}" Style="{StaticResource DefaultListBox}">
+                        <Button 
+                            Grid.Row="2"
+                            Command="{Binding DeleteCommand}"
+                            IsEnabled="{Binding Selected, Converter={StaticResource isNotNullConverter}}">
+                            Delete
+                        </Button>
+                             
+
+                        <ListBox Grid.Row="3" Name="BeersList" ItemsSource="{Binding List}" Style="{StaticResource DefaultListBox}">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SelectionChanged">
                                     <b:InvokeCommandAction Command="{Binding SelectCommand}" CommandParameter="{Binding ElementName=BeersList, Path=SelectedItem}"/>
@@ -254,6 +264,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition MaxHeight="25"></RowDefinition>
                             <RowDefinition MaxHeight="25"></RowDefinition>
+                            <RowDefinition MaxHeight="25"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         
@@ -273,7 +284,14 @@
                             Save
                         </Button>
 
-                        <ListBox Grid.Row="2" Name="BreweriesList" ItemsSource="{Binding List}" Style="{StaticResource DefaultListBox}">
+                        <Button 
+                            Grid.Row="2"
+                            Command="{Binding DeleteCommand}"
+                            IsEnabled="{Binding Selected, Converter={StaticResource nullableBooleanConverter}}">
+                            Delete
+                        </Button>
+
+                        <ListBox Grid.Row="3" Name="BreweriesList" ItemsSource="{Binding List}" Style="{StaticResource DefaultListBox}">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SelectionChanged">
                                     <b:InvokeCommandAction Command="{Binding SelectCommand}" CommandParameter="{Binding ElementName=BreweriesList, Path=SelectedItem}"/>

@@ -32,5 +32,10 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         {
             Selected = obj != null ? new BreweryViewModel((BreweryViewModel)obj) : null;
         }
+
+        protected override void Delete(BreweryViewModel item)
+        {
+            Blc.Instance.Breweries.Delete(item);
+        }
     }
 }

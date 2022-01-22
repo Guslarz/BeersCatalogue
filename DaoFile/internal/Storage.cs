@@ -28,7 +28,7 @@ namespace Kaczmarek.BeersCatalogue.DaoFile
         public void Persist()
         {
             var content = WriteContent();
-            var file = File.Open(_dbPath, FileMode.Open);
+            var file = File.Open(_dbPath, FileMode.Truncate);
             JsonSerializer.SerializeAsync(file, content, _serializerOptions).Wait();
             file.Close();
         }
@@ -83,7 +83,7 @@ namespace Kaczmarek.BeersCatalogue.DaoFile
             return content;
         }
 
-        private async void LoadContent(StorageContent content)
+        private void LoadContent(StorageContent content)
         {
             Breweries = content.Breweries
                     .Select(item => _breweryConverter.Convert(item))

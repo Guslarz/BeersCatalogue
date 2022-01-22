@@ -18,6 +18,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         public ICommand CreateCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand SelectCommand { get; }
+        public ICommand DeleteCommand { get; }
         public ICommand ApplyFilterCommand { get; }
         public ICommand ResetFilterCommand { get; }
 
@@ -58,6 +59,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
             CreateCommand = new RelayCommand(param => Create());
             SaveCommand = new RelayCommand(param => Save());
             SelectCommand = new RelayCommand(Select);
+            DeleteCommand = new RelayCommand(param => Delete());
             ApplyFilterCommand = new RelayCommand(param => ApplyFilter());
             ResetFilterCommand = new RelayCommand(param => ResetFilter());
             _draft = null;
@@ -73,10 +75,22 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
 
         protected abstract void Select(object obj);
 
+        protected abstract void Delete(T item);
+
         protected void LoadList()
         {
             List = new ObservableCollection<T>(Load());
         }
+
+        private void Delete()
+        {
+            if (!IsDraftSelected)
+            {
+                Delete(Selected);
+            }
+            LoadList();
+            Selected = null;
+        } 
 
         private void ApplyFilter()
         {
