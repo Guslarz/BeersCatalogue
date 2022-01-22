@@ -1,0 +1,69 @@
+{
+  "Beers": [
+    {
+      "Id": 0,
+      "Name": "Atak Chmielu",
+      "BreweryId": 0,
+      "Ibu": 58,
+      "Abv": 0.060999999999999999,
+      "Style": 1
+    },
+    {
+      "Id": 1,
+      "Name": "Na Wypasie",
+      "BreweryId": 2,
+      "Ibu": 35,
+      "Abv": 0.044999999999999998,
+      "Style": 1
+    },
+    {
+      "Id": 2,
+      "Name": "Dobra Noc",
+      "BreweryId": 2,
+      "Ibu": 80,
+      "Abv": 0.058000000000000003,
+      "Style": 4
+    },
+    {
+      "Id": 3,
+      "Name": "Komes Porter Ba\u0142tycki",
+      "BreweryId": 1,
+      "Ibu": 35,
+      "Abv": 0.089999999999999997,
+      "Style": 3
+    },
+    {
+      "Id": 4,
+      "Name": "Mi\u0142os\u0142aw Witbier",
+      "BreweryId": 1,
+      "Ibu": 17,
+      "Abv": 0.048000000000000001,
+      "Style": 5
+    },
+    {
+      "Id": 5,
+      "Name": "W\u0142asne Sprawy",
+      "BreweryId": 2,
+      "Ibu": 45,
+      "Abv": 0.056000000000000001,
+      "Style": 0
+    }
+  ],
+  "Breweries": [
+    {
+      "Id": 0,
+      "Name": "Pinta",
+      "City": "Wieprz"
+    },
+    {
+      "Id": 1,
+      "Name": "Browar Fortuna",
+      "City": "Mi\u0142os\u0142aw"
+    },
+    {
+      "Id": 2,
+      "Name": "Browar Za Miastem",
+      "City": "Rumianek"
+    }
+  ]
+}

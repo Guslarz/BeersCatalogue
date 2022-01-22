@@ -149,8 +149,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(ProjectDir)$(OutDir)$(ProjectName).*" "$(SolutionDir)ConsoleUi\$(OutDir)"
-xcopy /Y "$(ProjectDir)$(OutDir)$(ProjectName).*" "$(SolutionDir)Ui\$(OutDir)"
+    <PostBuildEvent>xcopy /Y "$(ProjectDir)$(OutDir)$(ProjectName).*" "$(SolutionDir)Ui\$(OutDir)"
 </PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

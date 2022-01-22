@@ -1,20 +1,25 @@
 ﻿using Kaczmarek.BeersCatalogue.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaczmarek.BeersCatalogue.DaoMock
+namespace Kaczmarek.BeersCatalogue.DaoFile
 {
     internal class Dao<T, I> : IDao<I>
-        where T : I, IStoredModel<I>, new()
+        where T : I, IModel<I>, new()
         where I : IDataObject
     {
-        private readonly IDictionary<int, T> _store;
+        private readonly Storage _storage;
+        private readonly Func<Storage, IDictionary<int, T>> _storeGetter;
         private int _nextId;
 
-        public Dao(IDictionary<int, T> store)
+        private IDictionary<int, T> _store { get => _storeGetter(_storage); }
+
+        public Dao(Storage storage, Func<Storage, IDictionary<int, T>> storeGetter)
         {
-            _store = store;
-            _nextId = _store.Count;
+            _storage = storage;
+            _storeGetter = storeGetter;
+            _nextId = _store.Keys.Count > 0 ? _store.Keys.Max() + 1 : 1;
         }
 
         public I Create()
@@ -25,6 +30,7 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
         public void Delete(I item)
         {
             _store.Remove(item.Id.Value);
+            _storage.Persist();
         }
 
         public IEnumerable<I> GetAll()
@@ -48,6 +54,7 @@ namespace Kaczmarek.BeersCatalogue.DaoMock
             {
                 Insert(item);
             }
+            _storage.Persist();
         }
 
         private void Update(I item)

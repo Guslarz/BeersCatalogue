@@ -324,8 +324,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.EntityFrameworkCore.Design.3.1.22\build\net461\Microsoft.EntityFrameworkCore.Design.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.EntityFrameworkCore.Design.3.1.22\build\net461\Microsoft.EntityFrameworkCore.Design.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(ProjectDir)$(OutDir)$(ProjectName).*" "$(SolutionDir)ConsoleUi\$(OutDir)"
-xcopy /Y "$(ProjectDir)$(OutDir)$(ProjectName).*" "$(SolutionDir)Ui\$(OutDir)"
+    <PostBuildEvent>xcopy /Y "$(ProjectDir)$(OutDir)$(ProjectName).*" "$(SolutionDir)Ui\$(OutDir)"
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
