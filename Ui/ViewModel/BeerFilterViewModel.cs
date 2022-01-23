@@ -97,7 +97,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         {
             return
                 (Name != null ? item.Name.ToLower().Contains(Name.ToLower()) : true) &&
-                (Brewery != null ? item.Brewery == Brewery : true) &&
+                (Brewery != null ? item.Brewery.Equals(Brewery) : true) &&
                 (MinIbu != null ? item.Ibu >= MinIbu : true) &&
                 (MaxIbu != null ? item.Ibu <= MaxIbu : true) &&
                 (MinAbv != null ? item.Abv >= MinAbv : true) &&

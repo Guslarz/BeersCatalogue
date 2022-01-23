@@ -1,4 +1,5 @@
 ﻿using Kaczmarek.BeersCatalogue.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kaczmarek.BeersCatalogue.DaoSql
 {
@@ -15,6 +16,7 @@ namespace Kaczmarek.BeersCatalogue.DaoSql
             _context = new BeersCatalogueContext();
             Beers = new Dao<Beer, IBeer>(_context, () => _context.Beers);
             Breweries = new Dao<Brewery, IBrewery>(_context, () => _context.Breweries);
+            _context.Database.Migrate();
         }
 
         public void Dispose()

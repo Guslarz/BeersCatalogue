@@ -1,6 +1,7 @@
 ﻿using Kaczmarek.BeersCatalogue.BLC;
 using Kaczmarek.BeersCatalogue.Interfaces;
 using Kaczmarek.BeersCatalogue.Ui.Properties;
+using System;
 using System.Windows;
 
 namespace Kaczmarek.BeersCatalogue.Ui
@@ -14,6 +15,12 @@ namespace Kaczmarek.BeersCatalogue.Ui
         {
             Blc.Initialize(LoadParams());
             InitializeComponent();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Blc.Instance.Dispose();
         }
 
         private IDbParams LoadParams()

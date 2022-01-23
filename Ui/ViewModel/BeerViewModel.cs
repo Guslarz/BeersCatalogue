@@ -37,6 +37,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
             }
         }
         
+        [Required]
         public IBrewery Brewery
         {
             get => _brewery;
