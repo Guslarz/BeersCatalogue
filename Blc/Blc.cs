@@ -32,10 +32,10 @@ namespace Kaczmarek.BeersCatalogue.BLC
             string dllPath = string.Format(_dllPathFormat, dbParams.Name);
             var assembly = Assembly.UnsafeLoadFrom(dllPath);
 
-            Type idaoType = typeof(IDatabase);
+            Type idbType = typeof(IDatabase);
             Type dbType = assembly
                 .GetExportedTypes()
-                .Where(type => type.GetInterfaces().Contains(idaoType))
+                .Where(type => type.GetInterfaces().Contains(idbType))
                 .First();
             _database = (IDatabase)Activator.CreateInstance(dbType, dbParams);
         }

@@ -93,6 +93,7 @@
         <converters:VisibilityConverter x:Key="visibilityConverter"/>
         <converters:InvertedVisibilityConverter x:Key="invertedVisibilityConverter"/>
         <converters:IsNotNullConverter x:Key="isNotNullConverter"/>
+        <converters:ConditionsAndConverter x:Key="conditionsAndConverter"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -110,6 +111,7 @@
                         <Button 
                             Grid.Row="0"
                             Command="{Binding CreateCommand}" 
+                            
                             IsEnabled="{Binding IsDraftSelected, Converter={StaticResource invertedNullableBooleanConverter}}"
                         >
                             Add new beer
@@ -118,8 +120,14 @@
                         <Button 
                             Grid.Row="1"
                             Command="{Binding SaveCommand}" 
-                            IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedNullableBooleanConverter}, FallbackValue=False}"
                         >
+
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource conditionsAndConverter}">
+                                    <Binding Path="Selected.HasErrors" Converter="{StaticResource invertedNullableBooleanConverter}" FallbackValue="False"/>
+                                    <Binding Path="Selected.IsDirty" FallbackValue="False"/>
+                                </MultiBinding>
+                            </Button.IsEnabled>
                             Save
                         </Button>
 
@@ -274,12 +282,17 @@
                         >
                             Add new brewery
                         </Button>
-                        
+
                         <Button 
                             Grid.Row="1"
                             Command="{Binding SaveCommand}" 
-                            IsEnabled="{Binding Selected.HasErrors, Converter={StaticResource invertedNullableBooleanConverter}, FallbackValue=False}"
                         >
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource conditionsAndConverter}">
+                                    <Binding Path="Selected.HasErrors" Converter="{StaticResource invertedNullableBooleanConverter}" FallbackValue="False"/>
+                                    <Binding Path="Selected.IsDirty" FallbackValue="False"/>
+                                </MultiBinding>
+                            </Button.IsEnabled>
                             Save
                         </Button>
 

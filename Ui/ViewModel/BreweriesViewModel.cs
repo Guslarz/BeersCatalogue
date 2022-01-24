@@ -26,6 +26,7 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
             _draft = null;
             NotifyProperyChanged(nameof(IsDraftSelected));
             LoadList();
+            Selected.IsDirty = false;
         }
 
         protected override void Select(object obj)

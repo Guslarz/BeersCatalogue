@@ -11,14 +11,25 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
     public class ValidatableViewModel : ViewModel, INotifyDataErrorInfo
     {
         private IDictionary<string, ICollection<string>> _validationErrors;
+        private bool _isDirty;
 
         public bool HasErrors => _validationErrors.Count > 0;
+        public bool IsDirty
+        {
+            get => _isDirty;
+            set
+            {
+                _isDirty = value;
+                NotifyProperyChanged();
+            }
+        }
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public ValidatableViewModel()
         {
             _validationErrors = new Dictionary<string, ICollection<string>>();
+            _isDirty = false;
         }
 
         public IEnumerable GetErrors(string propertyName)
@@ -33,9 +44,13 @@ namespace Kaczmarek.BeersCatalogue.Ui.ViewModel
         protected override void NotifyProperyChanged([CallerMemberName] string propertyName = "")
         {
             base.NotifyProperyChanged(propertyName);
-            if (propertyName != nameof(HasErrors))
+            if (propertyName != nameof(HasErrors) && propertyName != nameof(IsDirty))
             {
                 Validate();
+                if (!IsDirty)
+                {
+                    IsDirty = true;
+                }
             }
         }
 
